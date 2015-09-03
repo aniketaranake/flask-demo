@@ -1,0 +1,35 @@
+<!doctype html>
+<title>A short quiz</title>
+<link rel=stylesheet type=text/css href='{{ url_for('static',filename='style.css')}}'>
+<link href="http://cdn.pydata.org/bokeh/release/bokeh-0.9.3.min.css" rel="stylesheet" type="text/css">
+<script src="http://cdn.pydata.org/bokeh/release/bokeh-0.9.3.min.js" ></script>
+{{bokeh_script|safe}}
+
+<div class=page>
+
+  <h1> User Input</h1>
+
+  <div class=metanav>
+
+  <h4>
+  Please enter a stock ticker eg. GOOG, and check desired features.
+  </h4>
+
+  <form id='answerform' method='post' action='index'>
+    <p>
+      Ticker symbol: <input type='text' name='stock'>
+    </p>
+    <p>
+      Closing price <input type="checkbox" name='features' value='Close'><br>
+      Adjusted closing price <input type="checkbox" name='features' value='Adj. Close'><br>
+      Volume <input type="checkbox" name='features' value='Volume'><br>
+      <input type="submit" value="Submit">
+    </p>
+  </form>
+  </div>
+
+</div>
+<div align="center">
+{{bokeh_div|safe}}
+</div>
+{{note}}
