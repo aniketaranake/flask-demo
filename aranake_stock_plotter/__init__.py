@@ -1,2 +1,0 @@
-from aranake_stock_plotter.getstockdata import getstockdata
-from aranake_stock_plotter.generateplot import generateplot

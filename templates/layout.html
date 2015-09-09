@@ -12,17 +12,14 @@
   <div class=metanav>
 
   <h4>
-  Please enter a stock ticker eg. GOOG, and check desired features.
+  Select a date:
   </h4>
 
-  <form id='answerform' method='post' action='index'>
+  <form id='dateform' method='get' action='/plot'>
     <p>
-      Ticker symbol: <input type='text' name='stock'>
+      Date: <input type='text' id='inputdate' name='inputdate'>
     </p>
     <p>
-      Closing price <input type="checkbox" name='features' value='Close'><br>
-      Adjusted closing price <input type="checkbox" name='features' value='Adj. Close'><br>
-      Volume <input type="checkbox" name='features' value='Volume'><br>
       <input type="submit" value="Submit">
     </p>
   </form>
