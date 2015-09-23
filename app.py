@@ -12,12 +12,7 @@ def main():
 @app.route('/index',methods=['GET','POST'])
 def index():
 
-  print "Arrived in index()"
-  print "request.method: ", request.method
-  # Show the initial question sheet
-  if request.method=='GET':
-    print "Arrived in GET"
-    return render_template('layout.html',bokeh_script="",bokeh_div="",note="")
+    return render_template('map_layout.html')
 
 @app.route('/plot',methods=['GET','POST'])
 def plot():
