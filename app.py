@@ -1,9 +1,5 @@
 from flask import Flask, render_template, request, redirect
-<<<<<<< Updated upstream
-from aranake_stock_plotter import getstockdata,generateplot
-=======
 from caiso_plotter import getlmpdata, getselectorcode, generateplot
->>>>>>> Stashed changes
 import traceback
 
 app = Flask(__name__)
@@ -23,18 +19,6 @@ def index():
     print "Arrived in GET"
     return render_template('layout.html',bokeh_script="",bokeh_div="",note="")
 
-<<<<<<< Updated upstream
-  # Form was filled out, time to draw the plot
-  else:
-    print "Arrived in POST"
-
-    try:
-        # Call quandl API to get stock data
-        data = getstockdata(request.form['stock'])
-    except:
-        note = "ERROR getting stock data! Faulty ticker symbol?"#+traceback.format_exc()
-        return render_template('layout.html',bokeh_script="",bokeh_div="",note=note)
-=======
 @app.route('/plot',methods=['GET','POST'])
 def plot():
   print "Arrived in plot()"
@@ -65,18 +49,13 @@ def plot():
 #    except:
 #      note = "ERROR getting price data! "#+traceback.format_exc()
 #      return render_template('layout.html',bokeh_script="",bokeh_div="",note=note)
->>>>>>> Stashed changes
 
     # Generate bokeh plot
     desired_columns = request.form.getlist('features')
     script,div,note = generateplot(data,desired_columns,request.form['stock'])
 
     # Render
-<<<<<<< Updated upstream
-    return render_template('layout.html',bokeh_script=script,bokeh_div=div,note=note)
-=======
-    #return render_template('plotscreen.html',bokeh_script=script,bokeh_div=div,note=note)
->>>>>>> Stashed changes
+    return render_template('plotscreen.html',bokeh_script=script,bokeh_div=div,note=note)
 
 if __name__ == '__main__':
   app.run(host='0.0.0.0',port=33507,debug=True)
