@@ -12,7 +12,41 @@ def main():
 @app.route('/index',methods=['GET','POST'])
 def index():
 
-    return render_template('map_layout.html')
+    fname = request.args.get('plot_id')
+    with open('csv_data/%s.csv'%fname,'r') as f:
+        f.readline()
+        nodename = []
+        longitude = []
+        latitude = []
+        data_val = []
+        for line in f.readlines():
+            splt = line.split(',')
+            nodename.append(splt[1])
+            longitude.append(splt[2])
+            latitude.append(splt[3])
+            data_val.append(splt[4].strip())
+
+        str_out = "nodename = ["
+        for nn in nodename[:-1]:
+            str_out += '"' + nn + '", '
+        str_out += '"' + nodename[-1] + '"]; \n'
+
+        str_out += "latitude = ["
+        for lat in latitude[:-1]:
+            str_out += lat + ', '
+        str_out += latitude[-1] + "]; \n"
+
+        str_out += "longitude = ["
+        for lon in longitude[:-1]:
+            str_out += lon + ', '
+        str_out += longitude[-1] + "]; \n"
+
+        str_out += "data_val = ["
+        for dv in data_val[:-1]:
+            str_out += dv + ', '
+        str_out += data_val[-1] + "]; \n"
+
+    return render_template('map_layout.html',plotting_data=str_out)
 
 @app.route('/plot',methods=['GET','POST'])
 def plot():

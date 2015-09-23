@@ -1,6 +1,7 @@
 <html><body>
   <div id="mapdiv"></div>
   <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+  <script src="https://raw.githubusercontent.com/mholt/PapaParse/master/papaparse.min.js"></script>
   <script>
     function colorscale(scale_val) {
         var ratio = 2 * scale_val
@@ -50,15 +51,17 @@
     map.addLayer(vectorLayer);
     map.setCenter (lonLat, zoom);
 
+    // Let flask fill in the data here:
+    {{ plotting_data|safe}}
+
     // The following code adds all of the points
-    for (i=0; i<10; i++) {
+    for (i=0; i<latitude.length; i++) {
         vectorLayer.addFeatures([
           new OpenLayers.Feature.Vector(
-              new OpenLayers.Geometry.Point(-122.14+i*1e-3, 37.428),
+              new OpenLayers.Geometry.Point(longitude[i],latitude[i]),
               null,
-              {fillColor: colorscale(i/9.),pointRadius: 5, fillOpacity: 0.5, strokeWidth: 0})
-          ])
+              {fillColor: colorscale(data_val[i]),pointRadius: 5, fillOpacity: 0.5, strokeWidth: 0, title: nodename[i]})
+          ]);
     }
-    
   </script>
 </body></html>
