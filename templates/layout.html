@@ -1,5 +1,5 @@
 <!doctype html>
-<title>Stock value plotter - Aniket Aranake milestone project</title>
+<title>CAISO Locational Marginal Price plotting tool</title>
 <link rel=stylesheet type=text/css href='{{ url_for('static',filename='style.css')}}'>
 <link href="http://cdn.pydata.org/bokeh/release/bokeh-0.9.3.min.css" rel="stylesheet" type="text/css">
 <script src="http://cdn.pydata.org/bokeh/release/bokeh-0.9.3.min.js" ></script>
@@ -15,7 +15,11 @@
   Please enter a stock ticker eg. GOOG, and check desired features.
   </h4>
 
+<<<<<<< Updated upstream
   <form id='answerform' method='post' action='index'>
+=======
+  <form id='dateform' method='post' action='/plot'>
+>>>>>>> Stashed changes
     <p>
       Ticker symbol: <input type='text' name='stock'>
     </p>

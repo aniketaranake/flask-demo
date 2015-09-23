@@ -1,19 +1,22 @@
 from bokeh.plotting import figure
 import pandas as pd
-from bokeh.charts import TimeSeries
+from bokeh.charts import Line
 from bokeh.embed import components
 
-def generateplot(data, desired_columns, stock):
-    
-    # plot = figure()
-    # plot.circle([1,2], [3,4], radius=1.)
+def generateplot(data ):
     
     note = ""
-    if len(desired_columns)==0:
-        desired_columns = ['Close']
-        note = "NOTE: No desired features selected!"
+    # if len(desired_columns)==0:
+    #     desired_columns = ['Close']
+    #     note = "NOTE: No desired features selected!"
 
-    desired_columns.append('Date')
-    plot = TimeSeries(data.loc[:,desired_columns],index='Date',legend=True,title=stock)
+    print "\tSorting data"
+    data = data.sort(['OPR_HR'])
+
+    print "\tGenerating plot"
+    #plot = figure()
+    plot = Line(data['MW'],data['OPR_HR'],xlabel='Hour',ylabel='Locational Marginal Cost ($/MW)')
     script, div = components(plot)  
+ 
+    print "\treturning components"
     return script, div, note
