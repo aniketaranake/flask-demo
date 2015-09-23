@@ -2,6 +2,14 @@
   <div id="mapdiv"></div>
   <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
   <script>
+    function colorscale(scale_val) {
+        var ratio = 2 * scale_val
+        var b = (Math.max(0, 255*(1 - ratio))) | 0
+        var r = (Math.max(0, 255*(ratio - 1))) | 0
+        var g = 255 - b - r 
+        return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+    }
+
     map = new OpenLayers.Map("mapdiv");
     var layer = new OpenLayers.Layer.WMS( "OpenLayers WMS",
             "http://vmap0.tiles.osgeo.org/wms/vmap0", {layers: 'basic'} );
@@ -23,9 +31,9 @@
     layer_style.graphicOpacity = 1;
 
     /*
-     * Green style
+     * Marker style
      */
-    var style_green = {
+    var marker_style = {
         strokeColor: "#00FF00",
         strokeWidth: 0,
         fillColor: "#00FF00",
@@ -38,22 +46,19 @@
     var vectorLayer = new OpenLayers.Layer.Vector("Simple Geometry", {
         style: layer_style,
     });
-    // allow testing of specific renderers via "?renderer=Canvas", etc
-    //var renderer = OpenLayers.Util.getParameters(window.location.href).renderer;
-    //renderer = (renderer) ? [renderer] : OpenLayers.Layer.Vector.prototype.renderers;
-    //var vectorLayer = new OpenLayers.Layer.Vector("Simple Geometry", {
-    //    style: layer_style,
-    //    renderers: renderer
-    //});
-
-//    var point1 = new OpenLayers.Geometry.Point(-122.1467, 37.4284);
-//    var pointFeature1 = new OpenLayers.Feature.Vector(point2,null,style_green);
-    var point2 = new OpenLayers.Geometry.Point(-122.146754, 37.428417);
-    var pointFeature2 = new OpenLayers.Feature.Vector(point2,null,style_green);
 
     map.addLayer(vectorLayer);
     map.setCenter (lonLat, zoom);
-    vectorLayer.addFeatures([pointFeature2]);
+
+    // The following code adds all of the points
+    for (i=0; i<10; i++) {
+        vectorLayer.addFeatures([
+          new OpenLayers.Feature.Vector(
+              new OpenLayers.Geometry.Point(-122.14+i*1e-3, 37.428),
+              null,
+              {fillColor: colorscale(i/9.),pointRadius: 5, fillOpacity: 0.5, strokeWidth: 0})
+          ])
+    }
     
   </script>
 </body></html>
