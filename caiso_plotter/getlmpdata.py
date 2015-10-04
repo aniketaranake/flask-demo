@@ -4,13 +4,13 @@ import pandas as pd
 import numpy as np
 import zipfile
 
-def getlmpdata(date):
+def getlmpdata(date,node):
     url_prefix = 'http://oasis.caiso.com/oasisapi/SingleZip?queryname=PRC_LMP&version=1&market_run_id=DAM&resultformat=6'
 
-    startdatetime = "%sT07:00-0000"%date
     year  = int(date[:4])
-    month = int(date[4:6])
-    day   = int(date[6:])
+    month = int(date[5:7])
+    day   = int(date[8:])
+    startdatetime = "%d%02d%02dT07:00-0000"%(year,month,day)
     enddate = datetime.date(year,month,day) + datetime.timedelta(days=1)
     enddatetime = "%d%02d%02dT07:00-0000"%(enddate.year,enddate.month,enddate.day)
     print "startdatetime: ", startdatetime
@@ -36,7 +36,7 @@ def getlmpdata(date):
 
 def getselectorcode(nodelist):
   
-  code = ""
+  code = '<option value="map">Map</option>\n'
   for node in nodelist:
     code += '<option value="%s">%s</option>\n'%(node,node)
 

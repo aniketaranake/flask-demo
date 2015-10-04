@@ -125,7 +125,7 @@ class NodeDataHandler:
 
         return
 
-    def save_db(self):
+    def save_db(self,fname_out='caiso_data.pkl'):
 
         files = []
         for node in self.nodelist:
@@ -135,7 +135,7 @@ class NodeDataHandler:
         frames = [ pd.read_csv(f) for f in files ]
         result = pd.concat(frames)
 
-        result.to_pickle('caiso_data.pkl')
+        result.to_pickle(fname_out)
 
 
 if __name__=="__main__":
