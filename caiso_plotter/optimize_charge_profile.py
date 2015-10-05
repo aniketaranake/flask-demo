@@ -3,7 +3,7 @@ import numpy as np
 import scipy, scipy.optimize
 from scipy.optimize import minimize, fmin_slsqp
 import datetime
-import code
+#import code
 
 def optimize_charge_profile(data, max_charge, max_discharge,capacity):
 
@@ -91,6 +91,8 @@ def optimize_charge_profile(data, max_charge, max_discharge,capacity):
           max_savings    = savings[start_time]
           opt_start_time = start_time
           opt_power_dist = out
+          print "New optimal!"
+        print "savings: %3.2f, start_time: %d"%(savings[start_time],start_time)
 
 
     energy = np.zeros(24)
@@ -99,45 +101,10 @@ def optimize_charge_profile(data, max_charge, max_discharge,capacity):
 
     cost_time = np.zeros(24)
     for j in range(24):
-        cost_time[j] = opt_power_dist[j]*cost_MWh[start_time+j]
+        cost_time[j] = opt_power_dist[j]*cost_MWh[opt_start_time+j]
 
-#     print ""
-#     print "%15s %15s"%("start time", "savings")
-#     for j in range(24):
-#         print "%15d %15.2f"%(j, savings[j])
-# 
-#     print ""
-#     print "%15s %15s %15s %15s %15s"%("hour", "LMP", "energy", "cost_time", "charge rate"
-#     )
-#     for j in range(24):
-#         print "%15d %15.2f %15.2f %15.2f %15.2f %15.2f"%(j, cost_MWh[opt_start_time+j], energy[j], cost_time[j], opt_power_dist[j],constraint_list[j](opt_power_dist))
-
-    # import pylab as py
-    # py.figure()
-    # py.subplot(3,1,1)
-    # py.plot(hour,cost_MWh,'-')
-    # py.xlabel('Hour of day')
-    # py.ylabel('LMP ($/MWh)')
-    # py.grid(True)
-    # py.xlim([0,48])
-    # py.subplot(3,1,2)
-    # py.plot(range(start_time,start_time+24),energy)
-    # py.grid(True)
-    # py.xlim([0,48])
-    # py.ylabel('Energy storage (MWh)')
-    # py.subplot(3,1,3)
-    # py.plot(range(start_time,start_time+24),cost_time)
-    # py.grid(True)
-    # py.xlim([0,48])
-    # py.ylabel('Cost ($)')
-
-
-    print ""
-    print "Savings: $%5.2f"%max_savings
-    py.show()
-
-
-    return opt_power_dist, max_savings, start_time, energy
+    print "max_savings: %3.2f, start_time: %d"%(max_savings,opt_start_time)
+    return opt_power_dist, max_savings, opt_start_time, energy
 
 def compute_opt_dist(fname, date, max_charge, max_discharge,capacity):
         df0 = pd.read_csv(fname)

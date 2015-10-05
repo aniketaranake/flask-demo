@@ -1,2 +1,3 @@
 from caiso_plotter.getlmpdata import getlmpdata, getselectorcode
 from caiso_plotter.generateplot import generateplot
+from caiso_plotter.optimize_charge_profile import optimize_charge_profile

@@ -28,17 +28,20 @@ def getlmpdata(date,node):
     z.extractall()
 
     df0 = pd.read_csv(fname) 
-    df  = df0[df0['XML_DATA_ITEM']=='LMP_PRC'].loc[:,['NODE','OPR_HR','MW']]   # Select only the Locational Marginal Price
+    df  = df0.loc[df0['XML_DATA_ITEM']=='LMP_PRC',['NODE','OPR_HR','MW']]   # Select only the Locational Marginal Price
 
     nodelist = (df.groupby('NODE').first()).index.values
 
     return df,nodelist
 
-def getselectorcode(nodelist):
+def getselectorcode(nodelist,prev_node=None):
   
-  code = '<option value="map">Map</option>\n'
+  code = ''
   for node in nodelist:
-    code += '<option value="%s">%s</option>\n'%(node,node)
+    if node==prev_node:
+        code += '<option value="%s" selected="selected">%s</option>\n'%(node,node)
+    else:
+        code += '<option value="%s">%s</option>\n'%(node,node)
 
   return code
 if __name__=="__main__":
